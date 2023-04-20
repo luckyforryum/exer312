@@ -1,10 +1,7 @@
 package com.chong.SpringBoot312ver2.dao;
-
-
 import com.chong.SpringBoot312ver2.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +13,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> allEmployees = entityManager.createQuery("from User", User.class).getResultList();
-        return allEmployees;
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
 
     @Override
@@ -28,14 +24,11 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User getUser(Long id) {
-        User user = entityManager.find(User.class, id);
-        return user;
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public void deleteUser(Long id) {
-        Query query = entityManager.createQuery("delete from User where id =:userId");
-        query.setParameter("userId", id);
-        query.executeUpdate();
+        entityManager.remove(getUser(id));
     }
 }
